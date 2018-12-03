@@ -1,0 +1,23 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+img {
+    display: block;
+}
+#game-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+#game-box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
+}
+.card {
+    border: 1px solid white;
+}
