@@ -13,14 +13,62 @@ let images = [
     'https://kde.link/test/9.png'
 ];
 initGame();
+var firstEl, secondEl;
+
+function handleCardClick() {
+    if (!firstEl) {
+        firstEl = this;
+        this.classList.add('selected');
+        this.removeEventListener('click', handleCardClick);
+        return;
+    } 
+    secondEl = this;
+    this.classList.add('selected');
+    this.removeEventListener('click', handleCardClick);
+    checkCoincidence(firstEl, secondEl); 
+}
+
+function checkCoincidence(firstEl, secondEl) {
+    let args = Array.prototype.slice.call(arguments);
+    let [firstNum, secondNum] = args.map(el => el.getAttribute('data-number'));
+
+    if (firstNum == secondNum) {
+        setTimeout(function() {
+            args.map(el => {
+                el.classList.remove('selected');
+                el.classList.add('completed')
+            })
+        }, 200)
+    } else {
+        setTimeout(function() {
+            args.map(el => {
+                el.classList.remove('selected');
+                el.addEventListener('click', handleCardClick);
+            })
+        }, 500);
+    }
+    resetSteps();
+}
+
+function checkGameProcess() {
+    
+}
+
+function resetSteps() {
+    firstEl = null;
+    secondEl = null;
+}
 
 async function initGame() {
     let responseSize = await fetch('https://kde.link/test/get_field_size.php');
     let size = await responseSize.json();
     let cardsCount = size.width * size.height;
     let gameBox = document.getElementById('game-box')
+
     gameBox.style.width = (96+2)*size.width + 'px';
     gameBox.innerHTML = makeCardsCollectionHtml(cardsCount);
+    let cards = document.querySelectorAll('.card');
+    cards.forEach(card => card.addEventListener('click', handleCardClick));
 }
 
 function makeCardsCollectionHtml(cardsCount) {
@@ -44,11 +92,18 @@ function makeCardsCollectionHtml(cardsCount) {
         return cardsCollection
     }
 
-    function makeCard(imgSource) {
-        return `<div class="card">${makeImage(imgSource)}</div>`;
+    function makeCard(imgUrl) {
+        return `<div class="card" data-number="${getImageId(imgUrl)}" onclick>
+                    <div class="back-face"></div>
+                    ${makeImage(imgUrl)}
+                </div>`;
     
-        function makeImage(imgSource) {
-            return `<img src="${imgSource}">`
+        function makeImage(url) {
+            return `<img src="${url}" class="front-face">`
+        }
+
+        function getImageId(url) {
+            return url.split('/').slice(-1)[0].split('.')[0]
         }
     }
     

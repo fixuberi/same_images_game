@@ -17,7 +17,24 @@ img {
     flex-direction: row;
     flex-wrap: wrap;
     margin: auto;
+    border: 5px solid #4b73ce;
+    border-radius: 5px;
+    box-sizing: content-box;
 }
 .card {
     border: 1px solid white;
+    position: relative;
+}
+
+.back-face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #888;
+}
+.selected > div {
+    opacity: 0;
+}
+.completed > div {
+    background: white;
 }
