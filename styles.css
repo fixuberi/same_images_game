@@ -3,27 +3,63 @@
     margin: 0;
     box-sizing: border-box;
   }
+
+body {
+    font-size: 2vh;
+}
+
 img {
     display: block;
 }
+
 #game-container {
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    text-align: center;
   }
+
+#game-score {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    background: #4b73ce;
+    color: white;
+    height: 48px;
+}
 
 #game-box {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: auto;
+    align-self: center;
+    margin-top: 1vh;
     border: 5px solid #4b73ce;
-    border-radius: 5px;
     box-sizing: content-box;
 }
+
+#reset-button {
+    background: #133584;
+    border-radius: 2px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+#reset-button:hover {
+   opacity: 0.7; 
+}
+
+#reset-button:active {
+    transform: scale(0.97);
+}
+
 .card {
     border: 1px solid white;
     position: relative;
+}
+
+.card:active {
+    transform: scale(0.95);
 }
 
 .back-face {
@@ -32,9 +68,11 @@ img {
     position: absolute;
     background: #888;
 }
+
 .selected > div {
     opacity: 0;
 }
+
 .completed > div {
     background: white;
 }
